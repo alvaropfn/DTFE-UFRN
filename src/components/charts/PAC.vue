@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, reactive, computed } from 'vue'
+import { onMounted, onUpdated, reactive, computed, ref } from 'vue'
 import Filters from '../filters/Filters.vue'
 import { getCoinTickersById } from '../../services/api'
 import { getStorage } from '../../utils/cache'
@@ -430,7 +430,7 @@ const chart = reactive({
 const options = computed(() => chart.options)
 const series = computed(() => chart.series)
 
-const interval = reactive({ value: 7 })
+const interval = ref(7)
 
 const add = () => {
   // Add random number between 30 and 100 to series data
@@ -454,12 +454,17 @@ const getLocalStorage = () => {
   chart.series[0].data = coins.data
 }
 
+const updateInterval = (event) => {
+  // console.log(event)
+  interval.value = event.value
+}
+
 </script>
 
 <template>
   <div>
     <h4>PAC</h4>
-    <Filters :interval="interval" @update:interval="(value) => interval.value = value" />
+    <Filters :interval="interval" @update:interval="updateInterval" />
     <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
     <button @click="add">add</button>
     <button @click="getCoins">get coins</button>
