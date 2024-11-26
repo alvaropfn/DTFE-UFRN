@@ -1,34 +1,28 @@
+import { updateStorage } from '../utils/cache';
 const url = import.meta.env.VITE_COINGECKO_URL
 const key = import.meta.env.VITE_COINGECKO_KEY
 
 
-
-const getCoinsList = async () => {
-  const options = {
-  method: 'GET',
-  headers: {accept: 'application/json', 'x-cg-demo-api-key': key}
+const options = {
+method: 'GET',
+headers: {accept: 'application/json', 'x-cg-demo-api-key': key}
 };
+
+export const getCoinsList = async () => {
   fetch(
     `${url}/coins/list`,
     options
   )
   .then(res => res.json())
-  .then(json => {
-
-    localStorage.setItem('coinsList', JSON.stringify(json));
-    return json;
-  })
+  .then(json => updateStorage('coinsList', json))
   .catch(err => console.error(err));
 }
 
-const getCoinTickersById = (id) => {
-  const options = {
-    method: 'GET',
-    headers: {accept: 'application/json', 'x-cg-demo-api-key': key}
-  }
+export const getCoinTickersById = (id) => {
+
 }
 
-export { getCoinTickersById, getCoinsList };
+
 
 // fetch(url, options)
 //   .then(res => res.json())
