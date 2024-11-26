@@ -38,7 +38,7 @@ export const getExchangesList = () => {
   .catch(err => console.error(err));
 }
 
-export const getCoinTickersById = ({id, dataRef}) => {
+export const getCoinTickersById = ({id}) => {
   if(!id) {
     console.error('necessary id')
     return
@@ -52,10 +52,7 @@ export const getCoinTickersById = ({id, dataRef}) => {
     options
   )
   .then(res => res.json())
-  .then(json => {
-    updateStorage(`${id}`, json)
-    dataRef = json
-  })
+  .then(json => updateStorage(`${id}`, json))
   .catch(err => console.error(err));
 }
 
