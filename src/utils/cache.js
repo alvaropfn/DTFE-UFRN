@@ -3,23 +3,22 @@ const STORAGE_KEY = 'DFTE';
 const loadStorage = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 
 const parseTick = (data) => {
-  const filteredData = {}
+  const filteredData = []
   const tickers = data.tickers
-
   tickers
     // .filter(tick => tick.base === "ETH")// && tick.target === "USDT")
     .map(tick => {
       const key = new Date(tick.timestamp).getTime()
       const value = tick.last
-      filteredData[key] = value
+      filteredData.push([key, value])
     })
-    // .sort((a, b) => {
-    //   const keyA = Object.keys(a)[0]
-    //   const keyB = Object.keys(b)[0]
-    //   return keyA - keyB
-    // })
 
-  console.log(filteredData)
+  filteredData.sort((a, b) => {
+      const keyA = a[0]
+      const keyB = b[0]
+      return keyA - keyB
+    })
+
   return filteredData
 }
 

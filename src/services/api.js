@@ -56,3 +56,11 @@ export const getCoinTickersById = ({id}) => {
   .catch(err => console.error(err));
 }
 
+export const getHistoryById = ({
+  id, query = {
+    currency: 'usd',
+    days: 1
+  }
+}) => {
+
+}
