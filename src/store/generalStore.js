@@ -24,10 +24,12 @@ export const useGeneralStore = defineStore('generalStore', () => {
   }
 
   const fetchHistoryById = async ({id, query}) => {
-    const key = `${id}-${query.currency}`
+    const key = `history:${id}-${query.currency}`
     // TODO uncomment this
     // const data = await getHistoryById({id, query})
-    await updateStorage(`history:${key}`, data)
+    // await updateStorage(key, data)
+    
+    const data = await getStorage(key)
     return data
   }
 

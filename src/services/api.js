@@ -23,7 +23,6 @@ export const getCoinsList = async () => {
     const res = await fetch(`${url}/coins/list`, options);
     const json = await res.json();
     return json
-    // await updateStorage('coinsList', json);
   } catch (err) {
     console.error(err);
   }

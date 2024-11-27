@@ -1,7 +1,11 @@
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
 import { useGeneralStore } from "../../store";
-import { mapCoinsFromStore, mapCurrenciesFromStore } from "../../utils/helper";
+import {
+  mapCoinsFromStore,
+  mapCurrenciesFromStore,
+  mapHistoryFromStore,
+} from "../../utils/helper";
 
 import BottomControls from "../filters/BottomControls.vue";
 import Filters from "../filters/Filters.vue";
@@ -47,9 +51,9 @@ const coin = ref("bitcoin");
 const loadingCoins = ref(false);
 const coinOptions = ref([]);
 
-const timeRef = ref(300000);
+const timeRef = ref(1000);
 const timeOptions = [
-  // { label: "1s", value: 1000 },
+  { label: "1s", value: 1000 },
   { label: "5s", value: 5000 },
   { label: "30s", value: 30000 },
   { label: "1 min", value: 60000 },
@@ -57,14 +61,15 @@ const timeOptions = [
 ];
 let intervalId;
 const startInterval = (time) => {
-  intervalId = setInterval(() => {
-    store.fetchHistoryById({
+  intervalId = setInterval(async () => {
+    const history = await store.fetchHistoryById({
       id: coin.value,
       query: {
         currency: currency.value,
         days: days.value,
       },
     });
+    chart.series[0].data = mapHistoryFromStore(history);
   }, time);
 };
 const updateTime = (newTime) => {

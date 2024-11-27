@@ -9,3 +9,7 @@ export const mapCoinsFromStore = ({data}) => {
     return { label: coin.name, value: coin.id }
   })
 }
+
+export const mapHistoryFromStore = ({data}) => {
+  return data.prices
+}
