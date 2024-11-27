@@ -23,9 +23,7 @@ export const getCoinsList = async () => {
     const res = await fetch(`${url}/coins/list`, options);
     const json = await res.json();
     return json
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err) }
 }
 
 export const getExchangesList = () => {
@@ -61,9 +59,7 @@ export const getSupportedCurrencies = async () => {
     const res = await fetch(`${url}/simple/supported_vs_currencies`, options);
     const json = await res.json();
     return json
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err) }
 }
 
 export const getHistoryById = async ({ id, query }) => {
@@ -71,15 +67,27 @@ export const getHistoryById = async ({ id, query }) => {
   const days = query?.days || null
 
   let queryURL = "?"
-  queryURL += days ? `&days=${days}` : queryURL
-  queryURL += vs_currency ? `&vs_currency=${vs_currency}` : queryURL
+  queryURL += days ? `&days=${days}` : ''
+  queryURL += vs_currency ? `&vs_currency=${vs_currency}` : ''
   
   try {
     const res = await fetch(`${url}/coins/${id}/market_chart${queryURL}`, options);
     const json = await res.json();
     return json
-  } catch (err) {
-    console.error(err);
-  }
+  } catch (err) { console.error(err) }
+}
+
+export const getSimplePrice = async ({id, query}) => {
+  const vs_currencies = query?.currency || null
+  
+  let queryURL = ''
+  queryURL += vs_currencies ?`&vs_currencies=${vs_currencies}` : ''
+  queryURL += '&include_last_updated_at=true'
+
+  try {
+    const res = await fetch(`${url}/simple/price/?ids=${id}${queryURL}`, options);
+    const json = await res.json()
+    return json
+  } catch (err) { console.error(err) }
 
 }

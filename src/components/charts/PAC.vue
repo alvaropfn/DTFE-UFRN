@@ -5,6 +5,7 @@ import {
   mapCoinsFromStore,
   mapCurrenciesFromStore,
   mapHistoryFromStore,
+  mapSimplePrice,
 } from "../../utils/helper";
 
 import BottomControls from "../filters/BottomControls.vue";
@@ -15,6 +16,13 @@ const chart = reactive({
   options: {
     chart: {
       id: "vuechart-example",
+      animations: {
+        enabled: true,
+        easing: "linear",
+        dynamicAnimation: {
+          speed: 1000,
+        },
+      },
     },
     xaxis: {
       type: "datetime",
@@ -51,25 +59,30 @@ const coin = ref("bitcoin");
 const loadingCoins = ref(false);
 const coinOptions = ref([]);
 
-const timeRef = ref(1000);
+const timeRef = ref(30000);
 const timeOptions = [
-  { label: "1s", value: 1000 },
+  // { label: "1s", value: 1000 },
   { label: "5s", value: 5000 },
   { label: "30s", value: 30000 },
   { label: "1 min", value: 60000 },
   { label: "5 min", value: 300000 },
 ];
 let intervalId;
+
+const fetchHistory = async () => {
+  const history = await store.fetchHistoryById({
+    id: coin.value,
+    query: {
+      currency: currency.value,
+      days: days.value,
+    },
+  });
+  chart.series[0].data = mapHistoryFromStore(history);
+};
+
 const startInterval = (time) => {
-  intervalId = setInterval(async () => {
-    const history = await store.fetchHistoryById({
-      id: coin.value,
-      query: {
-        currency: currency.value,
-        days: days.value,
-      },
-    });
-    chart.series[0].data = mapHistoryFromStore(history);
+  intervalId = setInterval(() => {
+    addData();
   }, time);
 };
 const updateTime = (newTime) => {
@@ -78,26 +91,36 @@ const updateTime = (newTime) => {
   startInterval(timeRef.value);
 };
 
-const add = () => {
-  // Add random number between 30 and 100 to series data
-  series[0].data.push(Math.floor(Math.random() * 100));
+const addData = async () => {
+  const data = await store.fetchSimplePrice({
+    id: coin.value,
+    query: {
+      currency: currency.value,
+    },
+  });
 
-  // Get last year and add next year to categories
-  const lastYear =
-    options.xaxis.categories[options.xaxis.categories.length - 1];
-  options.xaxis.categories.push(lastYear + 1);
+  const [x, y] = mapSimplePrice({
+    id: coin.value,
+    currency: currency.value,
+    data,
+  });
+  console.log(x, y);
+  chart.series[0].data.push([x, y]);
 };
 
 const updateDays = (event) => {
   days.value = event.value;
+  fetchHistory();
 };
 
 const updateCurrency = (event) => {
   currency.value = event.value;
+  fetchHistory();
 };
 
 const updateCoin = (event) => {
   coin.value = event.value;
+  fetchHistory();
 };
 
 onMounted(() => {
@@ -111,6 +134,7 @@ onMounted(() => {
     coinOptions.value = mapCoinsFromStore(res);
     loadingCoins.value = false;
   });
+  fetchHistory();
   startInterval(timeRef.value);
 });
 
@@ -135,7 +159,7 @@ onUnmounted(() => {
       :loadingCoins="loadingCoins"
       @update:coin="updateCoin"
     />
-    <apexchart width="500" type="line" :options="options" :series="series" />
+    <apexchart width="400" type="line" :options="options" :series="series" />
     <BottomControls
       :timeRef="timeRef"
       :timeOptions="timeOptions"
