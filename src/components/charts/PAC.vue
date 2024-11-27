@@ -47,8 +47,9 @@ const coin = ref("bitcoin");
 const loadingCoins = ref(false);
 const coinOptions = ref([]);
 
-const timeRef = ref(5000);
+const timeRef = ref(300000);
 const timeOptions = [
+  // { label: "1s", value: 1000 },
   { label: "5s", value: 5000 },
   { label: "30s", value: 30000 },
   { label: "1 min", value: 60000 },
@@ -57,7 +58,13 @@ const timeOptions = [
 let intervalId;
 const startInterval = (time) => {
   intervalId = setInterval(() => {
-    // doSomeThing
+    store.fetchHistoryById({
+      id: coin.value,
+      query: {
+        currency: currency.value,
+        days: days.value,
+      },
+    });
   }, time);
 };
 const updateTime = (newTime) => {
@@ -109,7 +116,7 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <h4>PAC</h4>
+    <h2>PAC: Preço Atualizado de uma Criptomoeda</h2>
     <Filters
       :days="days"
       :daysOptions="daysOptions"
@@ -122,7 +129,6 @@ onUnmounted(() => {
       :coinOptions="coinOptions"
       :loadingCoins="loadingCoins"
       @update:coin="updateCoin"
-      @click:search="search"
     />
     <apexchart width="500" type="line" :options="options" :series="series" />
     <BottomControls

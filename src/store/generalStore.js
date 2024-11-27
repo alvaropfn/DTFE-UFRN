@@ -23,5 +23,13 @@ export const useGeneralStore = defineStore('generalStore', () => {
     return await getStorage(key)
   }
 
-  return {getCoins, fetchCoins, fetchCurrencies}
+  const fetchHistoryById = async ({id, query}) => {
+    const key = `${id}-${query.currency}`
+    // TODO uncomment this
+    // const data = await getHistoryById({id, query})
+    await updateStorage(`history:${key}`, data)
+    return data
+  }
+
+  return {getCoins, fetchCoins, fetchCurrencies, fetchHistoryById}
 })

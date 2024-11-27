@@ -66,11 +66,21 @@ export const getSupportedCurrencies = async () => {
     console.error(err);
   }
 }
-export const getHistoryById = ({
-  id, query = {
-    currency: 'usd',
-    days: 1
+
+export const getHistoryById = async ({ id, query }) => {
+  const vs_currency = query?.currency || null
+  const days = query?.days || null
+
+  let queryURL = "?"
+  queryURL += days ? `&days=${days}` : queryURL
+  queryURL += vs_currency ? `&vs_currency=${vs_currency}` : queryURL
+  
+  try {
+    const res = await fetch(`${url}/coins/${id}/market_chart${queryURL}`, options);
+    const json = await res.json();
+    return json
+  } catch (err) {
+    console.error(err);
   }
-}) => {
 
 }
