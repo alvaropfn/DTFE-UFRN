@@ -1,10 +1,6 @@
 <script setup>
 import { NSelect } from "naive-ui";
 import { onMounted, onUnmounted, ref } from "vue";
-import PAC from "../components/charts/PAC.vue";
-import { useCoinStore } from "../store/index";
-
-const store = useCoinStore();
 
 let intervalId;
 const startInterval = (time) => {
@@ -37,15 +33,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div style="width: 120px">
-    <NSelect
-      :value="timeRef"
-      :options="timeOptions"
-      @update:value="updateHandler"
-    />
+  <div>
+    <div style="width: 120px">
+      <NSelect
+        :value="timeRef"
+        :options="timeOptions"
+        @update:value="updateHandler"
+      />
+    </div>
   </div>
-  <h1>Dashboard</h1>
-  <PAC />
 </template>
 
 <style scoped></style>

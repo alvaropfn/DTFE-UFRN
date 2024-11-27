@@ -27,18 +27,9 @@ const onCoinChange = (_, value) => {
 };
 
 const intervalOptions = [
-  {
-    label: 7,
-    value: 7,
-  },
-  {
-    label: 30,
-    value: 30,
-  },
-  {
-    label: 90,
-    value: 90,
-  },
+  { label: 7, value: 7 },
+  { label: 30, value: 30 },
+  { label: 90, value: 90 },
 ];
 
 const currencyOptions = [

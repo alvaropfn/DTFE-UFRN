@@ -1,4 +1,4 @@
-import { updateStorage } from '../utils/cache';
+import { updateStorage, updateStorageTick } from '../utils/cache';
 const url = import.meta.env.VITE_COINGECKO_URL
 const key = import.meta.env.VITE_COINGECKO_KEY
 
