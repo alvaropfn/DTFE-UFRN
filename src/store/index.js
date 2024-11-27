@@ -1,3 +1,3 @@
-import { useCoinStore } from './coinStore'
+import { useGeneralStore } from './generalStore'
 
-export { useCoinStore }
+export { useGeneralStore }

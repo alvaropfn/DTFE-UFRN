@@ -56,15 +56,14 @@ export const getCoinTickersById = ({id}) => {
   .catch(err => console.error(err))
 }
 
-
-export const getSupportedCurrencies = () => {
-  fetch(
-    `${url}/simple/supported_vs_currencies`,
-    options
-  )
-  .then(res => res.json())
-  .then(json => updateStorage(`currencies`, json))
-  .catch(err => console.error(err))
+export const getSupportedCurrencies = async () => {
+  try {
+    const res = await fetch(`${url}/simple/supported_vs_currencies`, options);
+    const json = await res.json();
+    return json
+  } catch (err) {
+    console.error(err);
+  }
 }
 export const getHistoryById = ({
   id, query = {
