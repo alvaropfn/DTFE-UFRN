@@ -49,21 +49,21 @@ const onCoinChange = (_, value) => {
       <div style="width: 124px">
         <n-select
           filterable
-          placeholder="currency"
-          :value="props.currency"
-          :options="currencyOptions"
-          :loading="loadingCurrency"
-          @update:value="onCurrencyChange"
-        />
-      </div>
-      <div style="width: 124px">
-        <n-select
-          filterable
           placeholder="coin"
           :value="props.coin"
           :options="props.coinOptions"
           :loading="props.loadingCurrency"
           @update:value="onCoinChange"
+        />
+      </div>
+      <div style="width: 124px">
+        <n-select
+          filterable
+          placeholder="currency"
+          :value="props.currency"
+          :options="currencyOptions"
+          :loading="loadingCurrency"
+          @update:value="onCurrencyChange"
         />
       </div>
     </div>

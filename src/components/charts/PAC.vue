@@ -12,6 +12,8 @@ import BottomControls from "../filters/BottomControls.vue";
 import Filters from "../filters/Filters.vue";
 const store = useGeneralStore();
 
+const seriesName = computed(() => `price in ${currency.value}`);
+
 const chart = reactive({
   options: {
     chart: {
@@ -34,7 +36,7 @@ const chart = reactive({
   },
   series: [
     {
-      name: "series-1",
+      name: seriesName,
       data: [],
     },
   ],
