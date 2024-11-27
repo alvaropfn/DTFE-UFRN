@@ -461,7 +461,6 @@ const getCoins = () => {
 const getLocalStorage = () => {
   const coins = getStorage("bitcoin");
   const keys = Object.keys(coins.data);
-  // console.log(coins.data)
 
   // chart.options.xaxis.categories = categories
   chart.series[0].data = coins.data;

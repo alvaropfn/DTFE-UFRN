@@ -30,7 +30,6 @@ const updateHandler = (newTime) => {
 };
 
 onMounted(() => {
-  // store.fetchCoins("success - 0");
   store.fetchCurrencies().then((res) => {
     currenciesRef.value = mapCurrenciesFromStore(res);
   });
