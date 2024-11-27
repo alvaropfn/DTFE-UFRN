@@ -1,11 +1,11 @@
 <script setup>
 import { NSelect } from "naive-ui";
 const props = defineProps({
-  interval: {
+  days: {
     type: Number,
     required: true,
   },
-  intervalOptions: {
+  daysOptions: {
     type: Array,
     required: true,
   },
@@ -23,10 +23,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:interval", "update:currency", "update:coin"]);
+const emit = defineEmits(["update:days", "update:currency", "update:coin"]);
 
-const onIntervalChange = (_, value) => {
-  emit("update:interval", value);
+const onDaysChange = (_, value) => {
+  emit("update:days", value);
 };
 const onCurrencyChange = (_, value) => {
   emit("update:currency", value);
@@ -40,10 +40,10 @@ const onCoinChange = (_, value) => {
     <div style="display: flex">
       <div style="width: 84px">
         <n-select
-          :value="props.interval"
-          :options="intervalOptions"
+          :value="props.days"
+          :options="daysOptions"
           placeholder="days"
-          @update:value="onIntervalChange"
+          @update:value="onDaysChange"
         />
       </div>
       <div style="width: 124px">

@@ -28,6 +28,25 @@ const chart = reactive({
   ],
 });
 
+const options = computed(() => chart.options);
+const series = computed(() => chart.series);
+
+const daysOptions = [
+  { label: 1, value: 1 },
+  { label: 7, value: 7 },
+  { label: 30, value: 30 },
+  { label: 90, value: 90 },
+];
+
+const days = ref(1);
+const currency = ref("usd");
+const loadingCurrency = ref(false);
+const currencyOptions = ref([]);
+
+const coin = ref("bitcoin");
+const loadingCoins = ref(false);
+const coinOptions = ref([]);
+
 const timeRef = ref(5000);
 const timeOptions = [
   { label: "5s", value: 5000 },
@@ -38,27 +57,14 @@ const timeOptions = [
 let intervalId;
 const startInterval = (time) => {
   intervalId = setInterval(() => {
-    // store.fetchCoins("success");
+    // doSomeThing
   }, time);
 };
-
-const options = computed(() => chart.options);
-const series = computed(() => chart.series);
-
-const intervalOptions = [
-  { label: 7, value: 7 },
-  { label: 30, value: 30 },
-  { label: 90, value: 90 },
-];
-
-const interval = ref(7);
-const currency = ref("usd");
-const loadingCurrency = ref(false);
-const currencyOptions = ref([]);
-
-const coin = ref("bitcoin");
-const loadingCoins = ref(false);
-const coinOptions = ref([]);
+const updateTime = (newTime) => {
+  clearInterval(intervalId);
+  timeRef.value = newTime;
+  startInterval(timeRef.value);
+};
 
 const add = () => {
   // Add random number between 30 and 100 to series data
@@ -70,8 +76,8 @@ const add = () => {
   options.xaxis.categories.push(lastYear + 1);
 };
 
-const updateInterval = (event) => {
-  interval.value = event.value;
+const updateDays = (event) => {
+  days.value = event.value;
 };
 
 const updateCurrency = (event) => {
@@ -105,9 +111,9 @@ onUnmounted(() => {
   <div>
     <h4>PAC</h4>
     <Filters
-      :interval="interval"
-      :intervalOptions="intervalOptions"
-      @update:interval="updateInterval"
+      :days="days"
+      :daysOptions="daysOptions"
+      @update:days="updateDays"
       :currency="currency"
       :currencyOptions="currencyOptions"
       :loadingCurrency="loadingCurrency"
@@ -119,7 +125,11 @@ onUnmounted(() => {
       @click:search="search"
     />
     <apexchart width="500" type="line" :options="options" :series="series" />
-    <BottomControls />
+    <BottomControls
+      :timeRef="timeRef"
+      :timeOptions="timeOptions"
+      @update:time="updateTime"
+    />
   </div>
 </template>
 

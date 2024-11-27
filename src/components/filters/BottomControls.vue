@@ -1,44 +1,22 @@
 <script setup>
 import { NButton, NSelect, NTooltip } from "naive-ui";
-import { onMounted, onUnmounted, ref } from "vue";
-import { useGeneralStore } from "../../store";
-import { mapCurrenciesFromStore } from "../../utils/helper";
+import { ref } from "vue";
 
-const emit = defineEmits(["update:callback"]);
+const emit = defineEmits(["update:time"]);
 
-const store = useGeneralStore();
 const showRef = ref(false);
-const currenciesRef = ref([]);
 
-let intervalId;
-const startInterval = (time) => {
-  intervalId = setInterval(() => {}, time);
-};
-
-const timeRef = ref(5000);
-const timeOptions = [
-  { label: "5s", value: 5000 },
-  { label: "30s", value: 30000 },
-  { label: "1 min", value: 60000 },
-  { label: "5 min", value: 300000 },
-];
-
-const updateHandler = (newTime) => {
-  timeRef.value = newTime;
-  clearInterval(intervalId);
-  startInterval(newTime);
-};
-
-onMounted(() => {
-  store.fetchCurrencies().then((res) => {
-    currenciesRef.value = mapCurrenciesFromStore(res);
-  });
-  startInterval(timeRef.value);
+const props = defineProps({
+  timeRef: Number,
+  timeOptions: {
+    type: Array,
+    required: true,
+  },
 });
 
-onUnmounted(() => {
-  clearInterval(intervalId);
-});
+const updateTime = (newTime) => {
+  emit("update:time", newTime);
+};
 
 const onClick = (_) => {
   showRef.value = !showRef.value;
@@ -49,9 +27,9 @@ const onClick = (_) => {
   <div style="display: flex; width: 100%; justify-content: space-between">
     <div style="width: 120px">
       <NSelect
-        :value="timeRef"
-        :options="timeOptions"
-        @update:value="updateHandler"
+        :value="props.timeRef"
+        :options="props.timeOptions"
+        @update:value="updateTime"
       />
     </div>
     <div style="display: flex">
