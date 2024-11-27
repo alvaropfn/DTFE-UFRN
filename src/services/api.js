@@ -18,14 +18,15 @@ export const ping = () => {
   .catch(err => console.error(err));
 }
 
-export const getCoinsList = () => {
-  fetch(
-    `${url}/coins/list`,
-    options
-  )
-  .then(res => res.json())
-  .then(json => updateStorage('coinsList', json))
-  .catch(err => console.error(err))
+export const getCoinsList = async () => {
+  try {
+    const res = await fetch(`${url}/coins/list`, options);
+    const json = await res.json();
+    return json
+    // await updateStorage('coinsList', json);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export const getExchangesList = () => {

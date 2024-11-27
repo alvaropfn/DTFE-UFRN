@@ -12,9 +12,7 @@ const currenciesRef = ref([]);
 
 let intervalId;
 const startInterval = (time) => {
-  intervalId = setInterval(() => {
-    // store.fetchCoins("success");
-  }, time);
+  intervalId = setInterval(() => {}, time);
 };
 
 const timeRef = ref(5000);
@@ -24,6 +22,7 @@ const timeOptions = [
   { label: "1 min", value: 60000 },
   { label: "5 min", value: 300000 },
 ];
+
 const updateHandler = (newTime) => {
   timeRef.value = newTime;
   clearInterval(intervalId);

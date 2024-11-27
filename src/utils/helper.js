@@ -6,6 +6,6 @@ export const mapCurrenciesFromStore = ({data}) => {
 
 export const mapCoinsFromStore = ({data}) => {
   return data.map((coin) => {
-    return { label: label, value: value }
+    return { label: coin.name, value: coin.id }
   })
 }
