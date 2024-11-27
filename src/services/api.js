@@ -25,7 +25,7 @@ export const getCoinsList = () => {
   )
   .then(res => res.json())
   .then(json => updateStorage('coinsList', json))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 }
 
 export const getExchangesList = () => {
@@ -35,7 +35,7 @@ export const getExchangesList = () => {
   )
   .then(res => res.json())
   .then(json => updateStorage('exchangesList', json))
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 }
 
 export const getCoinTickersById = ({id}) => {
@@ -52,10 +52,20 @@ export const getCoinTickersById = ({id}) => {
     options
   )
   .then(res => res.json())
-  .then(json => updateStorage(`${id}`, json))
-  .catch(err => console.error(err));
+  .then(json => updateStorageTick(`${id}`, json))
+  .catch(err => console.error(err))
 }
 
+
+export const getSupportedCurrencies = () => {
+  fetch(
+    `${url}/simple/supported_vs_currencies`,
+    options
+  )
+  .then(res => res.json())
+  .then(json => updateStorage(`currencies`, json))
+  .catch(err => console.error(err))
+}
 export const getHistoryById = ({
   id, query = {
     currency: 'usd',

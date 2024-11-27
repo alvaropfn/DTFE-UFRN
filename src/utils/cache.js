@@ -23,16 +23,19 @@ const parseTick = (data) => {
 }
 
 export const updateStorage = (key, data) => {
-
   const storage = loadStorage()
   storage[key] = {
     last: new Date().toISOString(),
-    data: parseTick(data)
+    data: data
   };
   
   localStorage.setItem(STORAGE_KEY, JSON.stringify(storage));
   return data;
 };
+
+export const updateStorageTick = (key, data) => {
+  updateStorage(key, parseTick(data) )
+}
 
 export const getStorage = (key) =>{
   const storage = loadStorage()
