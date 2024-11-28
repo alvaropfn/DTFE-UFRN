@@ -10,9 +10,9 @@ Desenvolver um dashboard interativo para monitoramento de criptomoedas utilizand
 
 Até as 23h59 do dia 27/11/2024, Quarta-Feira, através de envio das entregas para os seguintes emails:
 
-- ricardo.niederauer@imd.ufrn.br
-- gustavo.sizilio@imd.ufrn.br
-- gibeon@dimap.ufrn.br
+- email01
+- email02
+- email03
 
 ## Entregas
 
@@ -22,9 +22,9 @@ Até as 23h59 do dia 27/11/2024, Quarta-Feira, através de envio das entregas pa
 - Código do projeto com estrutura organizada.
 - Commits frequentes e mensagens descritivas.
 - Lembre também de compartilhar o seu repositório com os seguintes emails:
-  a. ricardo.niederauer@imd.ufrn.br
-  b. gustavo.sizilio@imd.ufrn.br
-  c. gibeon@dimap.ufrn.br
+  a. email01
+  b. email02
+  c. email03
 
 ### Entrega 2: Documentação no Readme.md
 
