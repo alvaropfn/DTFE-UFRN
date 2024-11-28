@@ -24,6 +24,9 @@ const chart = reactive({
         dynamicAnimation: {
           speed: 1000,
         },
+        stroke: {
+          curve: "stepline",
+        },
       },
     },
 
@@ -58,7 +61,7 @@ const currency = ref("usd");
 const loadingCurrency = ref(false);
 const currencyOptions = ref([]);
 
-const coin = ref("bitcoin");
+const coin = ref("ethereum");
 const loadingCoins = ref(false);
 const coinOptions = ref([]);
 

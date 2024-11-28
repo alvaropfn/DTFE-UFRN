@@ -25,8 +25,10 @@ const chart = reactive({
           speed: 1000,
         },
       },
+      zoom: {
+        enabled: false,
+      },
     },
-
     xaxis: {
       type: "datetime",
     },
@@ -38,7 +40,7 @@ const chart = reactive({
   series: [
     {
       name: seriesName,
-      data: [],
+      data: [34, 44, 54, 21, 12, 43, 33, 23, 66, 66, 58],
     },
   ],
 });
@@ -58,7 +60,7 @@ const currency = ref("usd");
 const loadingCurrency = ref(false);
 const currencyOptions = ref([]);
 
-const coin = ref("bitcoin");
+const coin = ref("solana");
 const loadingCoins = ref(false);
 const coinOptions = ref([]);
 
@@ -148,7 +150,7 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <h2>PAC: Preço Atualizado de uma Criptomoeda</h2>
+    <h2>VPV: Variação Percentual ao Vivo</h2>
     <Filters
       :days="days"
       :daysOptions="daysOptions"

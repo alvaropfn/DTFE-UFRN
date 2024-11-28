@@ -1,11 +1,11 @@
 <script setup>
-import Dashboard from './views/Dashboard.vue'
+import Dashboard from "./views/Dashboard.vue";
 </script>
 
 <template>
-  <Dashboard />
+  <div class="bg-gray-700">
+    <Dashboard />
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
